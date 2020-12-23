@@ -1,0 +1,12 @@
+node_modules
+index.bat
+
+# Vim
+# ---
+*.sw[op]
+
+# Emacs
+# -----
+*~
+\#*\#
+.\#*

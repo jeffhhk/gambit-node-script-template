@@ -1,0 +1,11 @@
+{
+  "name": "gambit-node-script-template",
+  "version": "0.0.0",
+  "description": "Node.js executable project template. No Webpack required.",
+  "main": "index.bat",
+  "author": "Paulo Silva Filho",
+  "license": "MIT",
+  "dependencies": {
+    "underscore": "^1.12.0"
+  }
+}
