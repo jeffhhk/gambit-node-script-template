@@ -1,7 +1,7 @@
 (include "__baselib.scm")
 
 ; Import an external library:
-(!js-require _ underscore)
+(!js-global-require _ underscore)
 
 ; Run some statements:
 (!s "console.log(\"Running an statement!\");")
