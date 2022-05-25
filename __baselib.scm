@@ -19,7 +19,7 @@
                         (string-append 
                           res
                           initializer 
-                          "g_scm2host(@" 
+                          "_scm2host(@" 
                           (number->string (+ i 1)) 
                           "@)")
                         ",")))))))
@@ -43,7 +43,7 @@
                         (string-append 
                           res
                           initializer 
-                          "g_scm2host(@" 
+                          "_scm2host(@" 
                           (number->string (+ i 1)) 
                           "@)")
                         ",")))))))
@@ -80,13 +80,13 @@
   (##inline-host-expression "Date.now()"))
 
 (define (js-alert obj)
-  (##inline-host-statement "console.log(g_scm2host(@1@));" obj))
+  (##inline-host-statement "console.log(_scm2host(@1@));" obj))
 
 (define (raw.console.log obj)
   (##inline-host-statement "console.log(@1@);" obj))
 
 (define (console.log obj)
-  (##inline-host-statement "console.log(g_scm2host(@1@));" obj))
+  (##inline-host-statement "console.log(_scm2host(@1@));" obj))
 
 (define (make-random-string strlen)
   (!e "R(makeRandomString(P(@1@)))" strlen))
@@ -105,13 +105,13 @@
                           (string-append 
                            res
                            initializer 
-                           "g_scm2host(@" 
+                           "_scm2host(@" 
                            (number->string (+ i 3)) 
                            "@)")
                           ",")))))))
 
   `(##inline-host-expression 
-      ,(string-append "g_host2scm(@1@[g_scm2host(@2@)](" (r args) "))") 
+      ,(string-append "g_host2scm(@1@[_scm2host(@2@)](" (r args) "))") 
       ,object 
       ,(if (symbol? method) (symbol->string method) method) 
       ,@args)))
@@ -143,13 +143,13 @@
                           (string-append 
                            res
                            initializer 
-                           "g_scm2host(@" 
+                           "_scm2host(@" 
                            (number->string (+ i 3)) 
                            "@)")
                           ",")))))))
 
   `(##inline-host-expression 
-      ,(string-append "@1@[g_scm2host(@2@)](" (r args) ")") 
+      ,(string-append "@1@[_scm2host(@2@)](" (r args) ")") 
       ,object 
       ,(if (symbol? method) (symbol->string method) method) 
       ,@args)))
@@ -181,13 +181,13 @@
                           (string-append 
                            res
                            initializer 
-                           "g_scm2host(@" 
+                           "_scm2host(@" 
                            (number->string (+ i 3)) 
                            "@)")
                           ",")))))))
 
   `(##inline-host-statement 
-      ,(string-append "@1@[g_scm2host(@2@)](" (r args) ");") 
+      ,(string-append "@1@[_scm2host(@2@)](" (r args) ");") 
       ,object 
       ,(if (symbol? method) (symbol->string method) method) 
       ,@args)))
@@ -209,12 +209,12 @@
 ;;
 (define (!js-global name obj)
   (##inline-host-statement 
-    "global[g_scm2host(@1@)]=g_scm2host(@2@);" 
+    "global[_scm2host(@1@)]=_scm2host(@2@);" 
     name obj))
 
 (define (!raw-js-global name obj)
   (##inline-host-statement 
-    "global[g_scm2host(@1@)]=@2@;" 
+    "global[_scm2host(@1@)]=@2@;" 
     name obj))
 
 (define (!js-object) (!e "{}"))
@@ -224,8 +224,8 @@
     (##inline-host-statement 
       "(function() {
         const obj = @1@;
-        const name = g_scm2host(@2@);
-        const value = g_scm2host(@3@);
+        const name = _scm2host(@2@);
+        const value = _scm2host(@3@);
         obj[name] = value;
       })();" object n value)))
 (define !js-obj-set! !js-object-set!)
@@ -237,7 +237,7 @@
     (##inline-host-statement 
       "(function() {
         const obj = @1@;
-        const name = g_scm2host(@2@);
+        const name = _scm2host(@2@);
         const value = @3@;
         obj[name] = value;
       })();" object n value)))
@@ -249,7 +249,7 @@
   (let ((n (if (##symbol? name) (symbol->string name) name)))
     (!e "g_host2scm((function(){
       const obj = @1@;
-      const name = g_scm2host(@2@);
+      const name = _scm2host(@2@);
       return obj[name];
     })())" object n)))
 (define !js-obj-get !js-object-get)
@@ -260,7 +260,7 @@
   (let ((n (if (##symbol? name) (symbol->string name) name)))
     (!e "(function(){
       const obj = @1@;
-      const name = g_scm2host(@2@);
+      const name = _scm2host(@2@);
       return obj[name];
     })()" object n)))
 (define !js-obj-raw-get !js-object-raw-get)
